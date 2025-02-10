@@ -1,11 +1,12 @@
 [build]
-  base = "/"
-  command = "npm run build"
-  publish = "public"
-  functions = "netlify/functions"
+  base = "/"  # The root directory of the repository (you can leave this as-is if it's at the root)
+  command = "npm run build"  # Run the build script (which is 'vite build' in your case)
+  publish = "public"  # The folder where the built static files will be generated
+  functions = "netlify/functions"  # If you're using serverless functions, specify their directory
 
 [build.environment]
-  CI = "true"  # Set CI environment variable for the build process
+  CI = "true"  # Set the CI environment variable to enable Continuous Integration
 
 [context.production.environment]
-  NODE_ENV = "production"
+  NODE_ENV = "production"  # Set the environment to production for the build
+

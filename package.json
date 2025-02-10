@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "start": "node server.js",
-    "build": "vite build"  
+    "start": "node server.js", // Starts your Node.js server (backend)
+    "build": "vite build" // Builds the frontend assets (static files) with Vite
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
