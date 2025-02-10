@@ -1,8 +1,7 @@
-# netlify.toml
 [build]
-  base = "/"
-  publish = "/public"
-  command = "npm run build"  # Or use your build command if applicable
+  command = "npm run build"  # This will run the build script defined in your package.json
+  publish = "public"  # The directory where the built files will be output (adjust if needed)
+  functions = "netlify/functions"  # If you are using serverless functions, this is the directory
 
-[functions]
-  directory = "netlify/functions"
+[context.production.environment]
+  NODE_ENV = "production"
