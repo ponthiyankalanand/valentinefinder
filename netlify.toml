@@ -1,0 +1,8 @@
+# netlify.toml
+[build]
+  base = "/"
+  publish = "/public"
+  command = "npm run build"  # Or use your build command if applicable
+
+[functions]
+  directory = "netlify/functions"
