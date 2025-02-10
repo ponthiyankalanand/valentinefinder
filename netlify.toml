@@ -1,8 +1,11 @@
 [build]
   base = "/"
-  CI= "npm run build"
-  publish = "public"  # The directory where the built files will be output (adjust if needed)
-  functions = "netlify/functions"  # If you are using serverless functions, this is the directory
+  command = "npm run build"
+  publish = "public"
+  functions = "netlify/functions"
+
+[build.environment]
+  CI = "true"  # Set CI environment variable for the build process
 
 [context.production.environment]
   NODE_ENV = "production"
