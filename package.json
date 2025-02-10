@@ -14,5 +14,12 @@
   },
   "devDependencies": {
     "webpack-cli": "^6.0.1"
-  }
+  },
+  "name": "l",
+  "version": "1.0.0",
+  "main": "dbcheck.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
