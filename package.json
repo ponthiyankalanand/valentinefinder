@@ -1,7 +1,9 @@
 {
+  "name": "my-project",
+  "version": "0.0.01",
   "scripts": {
     "start": "node server.js",
-    "build": "vite build"  
+    "build": "vite build"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
