@@ -10,9 +10,9 @@ const app = express();
 const userDbUri = "mongodb+srv://ponthiyankalanand:tWMhydJVYFUOzm9N@cluster0.efaq6.mongodb.net/userDB?ssl=true&retryWrites=true&w=majority";
 const responseDbUri = "mongodb+srv://ponthiyankalanand:tWMhydJVYFUOzm9N@cluster0.efaq6.mongodb.net/responseDB?ssl=true&retryWrites=true&w=majority";
 
-// CORS middleware to allow all origins (for development purposes)
+// CORS middleware to allow specific origin (for production purposes)
 const corsOptions = {
-    origin: 'https://valantainfinder.netlify.app',  // Allow all origins, adjust this for production security
+    origin: 'https://valantainfinder.netlify.app',  // Adjust this for production security
     methods: 'GET, POST',
     allowedHeaders: 'Content-Type, Authorization',
 };
@@ -56,6 +56,7 @@ async function connectToDatabases() {
 
 // Call the function to connect to the databases
 connectToDatabases();
+
 // Serve the index.html when accessing the root URL
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
