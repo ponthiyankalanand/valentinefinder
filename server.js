@@ -12,8 +12,8 @@ const responseDbUri = "mongodb+srv://ponthiyankalanand:tWMhydJVYFUOzm9N@cluster0
 
 // CORS middleware to allow all origins (for development purposes)
 const corsOptions = {
-    origin: '*',  // Allow all origins, adjust this for production security
-    methods: 'GET, POST, PUT, DELETE',
+    origin: 'https://valantainfinder.netlify.app',  // Allow all origins, adjust this for production security
+    methods: 'GET, POST',
     allowedHeaders: 'Content-Type, Authorization',
 };
 app.use(cors(corsOptions));
