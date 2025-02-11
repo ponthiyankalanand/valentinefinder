@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
     "",
+    "\\netlify",
     "\\public"
   ],
+  "SelectedNode": "\\netlify.toml",
   "PreviewInSolutionExplorer": false
 }
