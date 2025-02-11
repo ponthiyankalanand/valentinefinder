@@ -1,6 +1,6 @@
 {
-  "name": "my-project",
-  "version": "0.0.01",
+  "name": "l",
+  "version": "1.0.0",
   "scripts": {
     "start": "node server.js",
     "build": "vite build"
@@ -12,14 +12,13 @@
     "mongodb": "^6.13.0",
     "mongoose": "^8.10.0",
     "netlify-cli": "^18.0.4",
-    "netlify-lambda": "^2.0.16",
-    "serverless-http": "^3.2.0"
+    "netlify-lambda": "^0.4.0",
+    "serverless-http": "^3.2.0",
+    "vite": "^6.1.0"
   },
   "devDependencies": {
     "webpack-cli": "^6.0.1"
   },
-  "name": "l",
-  "version": "1.0.0",
   "main": "dbcheck.js",
   "keywords": [],
   "author": "",
