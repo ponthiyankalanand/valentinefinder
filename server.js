@@ -4,19 +4,13 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
+const cors = require('cors');
 
 // Initialize the Express application
 
 // CORS middleware to allow all origins (adjust in production for security)
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*'); // Allows all origins
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    if (req.method === 'OPTIONS') {
-        return res.sendStatus(200);
-    }
-    next();
-});
+// Enable CORS for all origins (for development purposes, be cautious in production)
+app.use(cors());
 
 
 const port = 3000; // You can use any port you prefer
