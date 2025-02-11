@@ -56,9 +56,13 @@ async function connectToDatabases() {
 
 // Call the function to connect to the databases
 connectToDatabases();
+// Serve the index.html when accessing the root URL
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 // Handle URL with or without `id` parameter
-app.get('/', async (req, res) => {
+app.get('/id', async (req, res) => {
     const { id } = req.query; // Extract the 'id' query parameter from the URL
 
     if (id) {
@@ -87,7 +91,7 @@ app.get('/', async (req, res) => {
 });
 
 // API to submit data (ensure proper CORS handling)
-app.post('/api/submit', async (req, res) => {
+app.post('/submit', async (req, res) => {
     const { name, id, hash } = req.body;
 
     if (!name || !id || !hash) {
@@ -108,7 +112,7 @@ app.post('/api/submit', async (req, res) => {
 });
 
 // API to share data (ensure proper CORS handling)
-app.post('/api/share', async (req, res) => {
+app.post('/share', async (req, res) => {
     const { name, id, hash } = req.body;
 
     if (!name || !hash || !id) {
