@@ -4,19 +4,23 @@ const userDbUri = "mongodb+srv://ponthiyankalanand:tWMhydJVYFUOzm9N@cluster0.efa
 const responseDbUri = "mongodb+srv://ponthiyankalanand:tWMhydJVYFUOzm9N@cluster0.efaq6.mongodb.net/responseDB?ssl=true&retryWrites=true&w=majority";
 
 const userDbClient = new MongoClient(userDbUri, {
-  serverApi: { version: ServerApiVersion.v1 },
-  tls: true,
-  tlsAllowInvalidCertificates: true,
-  serverSelectionTimeoutMS: 3000,
-  autoSelectFamily: false,
+    serverApi: {
+        version: ServerApiVersion.v1,
+    },
+    tls: true,
+    tlsAllowInvalidCertificates: true,
+    serverSelectionTimeoutMS: 3000,
+    autoSelectFamily: false
 });
 
 const responseDbClient = new MongoClient(responseDbUri, {
-  serverApi: { version: ServerApiVersion.v1 },
-  tls: true,
-  tlsAllowInvalidCertificates: true,
-  serverSelectionTimeoutMS: 3000,
-  autoSelectFamily: false,
+    serverApi: {
+        version: ServerApiVersion.v1,
+    },
+    tls: true,
+    tlsAllowInvalidCertificates: true,
+    serverSelectionTimeoutMS: 3000,
+    autoSelectFamily: false
 });
 
 const connectToDatabases = async () => {
