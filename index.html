@@ -475,7 +475,7 @@
 
         function fetchDistinctHashes() {
             const userName = localStorage.getItem("userName");
-            fetch(`/distinct-hashes?userName=${userName}`)
+            fetch(`/.netlify/functions/distinct-hashes?userName=${userName}`)
                 .then(response => response.json())
                 .then(data => {
                     const hashesContainer = document.getElementById("hashes-container");
