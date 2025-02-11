@@ -10,9 +10,9 @@ const app = express();
 const userDbUri = "mongodb+srv://ponthiyankalanand:tWMhydJVYFUOzm9N@cluster0.efaq6.mongodb.net/userDB?ssl=true&retryWrites=true&w=majority";
 const responseDbUri = "mongodb+srv://ponthiyankalanand:tWMhydJVYFUOzm9N@cluster0.efaq6.mongodb.net/responseDB?ssl=true&retryWrites=true&w=majority";
 
-// Use the CORS middleware to allow all origins (development purpose)
+// CORS middleware to allow all origins (for development purposes)
 const corsOptions = {
-    origin: '*',
+    origin: '*',  // Allow all origins, adjust this for production security
     methods: 'GET, POST, PUT, DELETE',
     allowedHeaders: 'Content-Type, Authorization',
 };
@@ -83,6 +83,48 @@ app.get('/', async (req, res) => {
     } else {
         // If no `id` parameter is provided, handle the request differently
         res.status(200).json({ message: 'Welcome! Please provide an ID in the query string for more details.' });
+    }
+});
+
+// API to submit data (ensure proper CORS handling)
+app.post('/api/submit', async (req, res) => {
+    const { name, id, hash } = req.body;
+
+    if (!name || !id || !hash) {
+        return res.status(400).json({ error: 'Name, ID, and hash are required' });
+    }
+
+    try {
+        const responseDb = responseDbClient.db();
+        const responsesCollection = responseDb.collection('responses');
+
+        await responsesCollection.insertOne({ name, id, hash });
+
+        res.status(200).json({ message: 'Happy :)' });
+    } catch (err) {
+        console.error('Error saving data to responseDB:', err);
+        res.status(500).json({ error: 'Sad :(' });
+    }
+});
+
+// API to share data (ensure proper CORS handling)
+app.post('/api/share', async (req, res) => {
+    const { name, id, hash } = req.body;
+
+    if (!name || !hash || !id) {
+        return res.status(400).json({ error: 'Name and ID are required' });
+    }
+
+    try {
+        const userDb = userDbClient.db();
+        const usersCollection = userDb.collection('users');
+
+        await usersCollection.insertOne({ name, id, hash });
+
+        res.status(200).json({ message: 'User details saved!' });
+    } catch (err) {
+        console.error('Error saving user data to userDB:', err);
+        res.status(500).json({ error: 'Error saving user data' });
     }
 });
 
