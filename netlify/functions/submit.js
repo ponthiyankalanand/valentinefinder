@@ -28,7 +28,7 @@ const handlePreflight = () => {
         statusCode: 200,
         body: '',
         headers: {
-            'Access-Control-Allow-Origin': '*', // Allow only your frontend origin
+            'Access-Control-Allow-Origin': '*', // Allow all origins (use specific origin in production)
             'Access-Control-Allow-Methods': 'POST, OPTIONS',
             'Access-Control-Allow-Headers': 'Content-Type',
         },
@@ -36,8 +36,8 @@ const handlePreflight = () => {
 };
 
 exports.handler = async (event, context) => {
+    // Handle preflight OPTIONS request
     if (event.httpMethod === 'OPTIONS') {
-        // Handle preflight CORS request
         return handlePreflight();
     }
 
@@ -50,7 +50,7 @@ exports.handler = async (event, context) => {
             statusCode: 400,
             body: JSON.stringify({ error: 'Name, ID, and hash are required' }),
             headers: {
-                'Access-Control-Allow-Origin': 'https://valantainfinder.netlify.app', // Allow only your frontend origin
+                'Access-Control-Allow-Origin': '*', // Allow all origins (use specific origin in production)
                 'Access-Control-Allow-Methods': 'POST, OPTIONS',
                 'Access-Control-Allow-Headers': 'Content-Type',
             },
@@ -67,7 +67,7 @@ exports.handler = async (event, context) => {
             statusCode: 200,
             body: JSON.stringify({ message: 'Happy :)' }),
             headers: {
-                'Access-Control-Allow-Origin': 'https://valantainfinder.netlify.app', // Allow only your frontend origin
+                'Access-Control-Allow-Origin': '*', // Allow all origins (use specific origin in production)
                 'Access-Control-Allow-Methods': 'POST, OPTIONS',
                 'Access-Control-Allow-Headers': 'Content-Type',
             },
@@ -78,7 +78,7 @@ exports.handler = async (event, context) => {
             statusCode: 500,
             body: JSON.stringify({ error: 'Sad :(' }),
             headers: {
-                'Access-Control-Allow-Origin': 'https://valantainfinder.netlify.app', // Allow only your frontend origin
+                'Access-Control-Allow-Origin': '*', // Allow all origins (use specific origin in production)
                 'Access-Control-Allow-Methods': 'POST, OPTIONS',
                 'Access-Control-Allow-Headers': 'Content-Type',
             },

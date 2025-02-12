@@ -345,11 +345,11 @@
             var data = { name: username, id: id, hash: hash };
 
             // CORS proxy URL (using CORS Anywhere for demonstration)
-            var corsProxy = 'https://cors-anywhere.herokuapp.com/';
+            //var corsProxy = 'https://cors-anywhere.herokuapp.com/';
             var targetUrl = 'https://valantainfinder.netlify.app/.netlify/functions/submit'; // Replace with your server's URL
 
             // Send data using the Fetch API (AJAX) through CORS proxy
-            fetch(corsProxy + targetUrl, {
+            fetch(targetUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
