@@ -12,6 +12,6 @@
 [[headers]]
   for = "/*"  # Apply these headers to all paths
   [headers.values]
-    Access-Control-Allow-Origin = "https://valantinefinder.netlify.app"
+    Access-Control-Allow-Origin = "*"
     Access-Control-Allow-Methods = "POST, OPTIONS"
     Access-Control-Allow-Headers = "Content-Type"
