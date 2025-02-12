@@ -11,7 +11,7 @@
     Access-Control-Allow-Headers = "Content-Type"
 
 [[headers]]
-  for = "/.netlify/functions/*"
+  for = "/.netlify/functions/submit"
   [headers.values]
     Access-Control-Allow-Origin = "https://valantinefinder.netlify.app"
     Access-Control-Allow-Methods = "POST, OPTIONS"
