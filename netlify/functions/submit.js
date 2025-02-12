@@ -25,9 +25,9 @@ const connectToDatabase = async () => {
 const handlePreflight = () => {
     return {
         statusCode: 200,
-        body: '',
+        body: 'sending response for CORS',
         headers: {
-            'Access-Control-Allow-Origin': 'https://valantainfinder.netlify.app/.netlify/functions/submit',  // Allow all origins (replace '*' with your frontend URL in production)
+            'Access-Control-Allow-Origin': 'https://valantainfinder.netlify.app/',  // Allow all origins (replace '*' with your frontend URL in production)
             'Access-Control-Allow-Methods': 'OPTIONS',
             'Access-Control-Allow-Headers': 'Content-Type',
         },
@@ -37,8 +37,6 @@ const handlePreflight = () => {
 exports.handler = async (event, context) => {
     // Handle preflight CORS request (OPTIONS)
     if (event.httpMethod === 'OPTIONS') {
-        console.log('preflight got');
-        console.log(handlePreflight(););
         return handlePreflight();
     }
 
