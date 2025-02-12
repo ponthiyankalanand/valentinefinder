@@ -28,7 +28,7 @@ const handlePreflight = () => {
         body: '',
         headers: {
             'Access-Control-Allow-Origin': '*',  // Allow all origins (replace '*' with your frontend URL in production)
-            'Access-Control-Allow-Methods': 'POST, OPTIONS',
+            'Access-Control-Allow-Methods': 'OPTIONS',
             'Access-Control-Allow-Headers': 'Content-Type',
         },
     };
