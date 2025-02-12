@@ -29,15 +29,13 @@ const corsHeaders = {
 };
 
 // Handle preflight CORS requests (OPTIONS)
-const handlePreflight = () => {
-    return {
-        statusCode: 200,
-        body: 'sending response for CORS',
-        headers: corsHeaders,
-    };
-};
+const handlePreflight = () => ({
+    statusCode: 200,
+    body: 'sending response for CORS',
+    headers: corsHeaders,
+});
 
-exports.handler = async (event, context) => {
+exports.handler = async (event) => {
     // Handle preflight CORS request (OPTIONS)
     if (event.httpMethod === 'OPTIONS') {
         return handlePreflight();
