@@ -1,47 +1,87 @@
 const { MongoClient, ServerApiVersion } = require('mongodb');
 
+// MongoDB URIs
 const userDbUri = "mongodb+srv://ponthiyankalanand:tWMhydJVYFUOzm9N@cluster0.efaq6.mongodb.net/userDB?ssl=true&retryWrites=true&w=majority";
 const responseDbUri = "mongodb+srv://ponthiyankalanand:tWMhydJVYFUOzm9N@cluster0.efaq6.mongodb.net/responseDB?ssl=true&retryWrites=true&w=majority";
 
+// MongoDB Client
 const responseDbClient = new MongoClient(responseDbUri, {
-  serverApi: { version: ServerApiVersion.v1 },
-  tls: true,
-  tlsAllowInvalidCertificates: true,
-  serverSelectionTimeoutMS: 3000,
-  autoSelectFamily: false,
+    serverApi: { version: ServerApiVersion.v1 },
+    tls: true,
+    tlsAllowInvalidCertificates: true,
+    serverSelectionTimeoutMS: 3000,
+    autoSelectFamily: false,
 });
 
+// Cache the connection to avoid reconnecting on every request
+let isConnected = false;
+
 const connectToDatabase = async () => {
-  await responseDbClient.connect();
+    if (isConnected) return; // If already connected, skip reconnecting
+    await responseDbClient.connect();
+    isConnected = true;
+};
+
+// Handle preflight CORS requests
+const handlePreflight = () => {
+    return {
+        statusCode: 200,
+        body: '',
+        headers: {
+            'Access-Control-Allow-Origin': '*',  // Adjust as needed for security
+            'Access-Control-Allow-Methods': 'POST, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type',
+        },
+    };
 };
 
 exports.handler = async (event, context) => {
-  await connectToDatabase();
+    if (event.httpMethod === 'OPTIONS') {
+        // Handle preflight CORS request
+        return handlePreflight();
+    }
 
-  const { name, id, hash } = JSON.parse(event.body);
+    await connectToDatabase();
 
-  if (!name || !id || !hash) {
-    return {
-      statusCode: 400,
-      body: JSON.stringify({ error: 'Name, ID, and hash are required' }),
-    };
-  }
+    const { name, id, hash } = JSON.parse(event.body);
 
-  try {
-    const responseDb = responseDbClient.db();
-    const responsesCollection = responseDb.collection('responses');
+    if (!name || !id || !hash) {
+        return {
+            statusCode: 400,
+            body: JSON.stringify({ error: 'Name, ID, and hash are required' }),
+            headers: {
+                'Access-Control-Allow-Origin': '*',  // Adjust as needed for security
+                'Access-Control-Allow-Methods': 'POST, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type',
+            },
+        };
+    }
 
-    await responsesCollection.insertOne({ name, id, hash });
+    try {
+        const responseDb = responseDbClient.db();
+        const responsesCollection = responseDb.collection('responses');
 
-    return {
-      statusCode: 200,
-      body: JSON.stringify({ message: 'Happy :)' }),
-    };
-  } catch (err) {
-    console.error('Error saving data to responseDB:', err);
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: 'Sad :(' }),
-    };
-  }
+        await responsesCollection.insertOne({ name, id, hash });
+
+        return {
+            statusCode: 200,
+            body: JSON.stringify({ message: 'Happy :)' }),
+            headers: {
+                'Access-Control-Allow-Origin': '*',  // Adjust as needed for security
+                'Access-Control-Allow-Methods': 'POST, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type',
+            },
+        };
+    } catch (err) {
+        console.error('Error saving data to responseDB:', err);
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ error: 'Sad :(' }),
+            headers: {
+                'Access-Control-Allow-Origin': '*',  // Adjust as needed for security
+                'Access-Control-Allow-Methods': 'POST, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type',
+            },
+        };
+    }
 };
