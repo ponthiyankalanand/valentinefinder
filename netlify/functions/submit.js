@@ -28,7 +28,7 @@ const handlePreflight = () => {
         statusCode: 200,
         body: '',
         headers: {
-            'Access-Control-Allow-Origin': 'https://valantainfinder.netlify.app', // Allow only your frontend origin
+            'Access-Control-Allow-Origin': '*', // Allow only your frontend origin
             'Access-Control-Allow-Methods': 'POST, OPTIONS',
             'Access-Control-Allow-Headers': 'Content-Type',
         },

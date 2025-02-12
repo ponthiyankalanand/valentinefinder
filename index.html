@@ -337,14 +337,13 @@
         const nameInput = document.getElementById("nameInput");
         //Ajax req for update like
         function sendlove() {
-            // Get the input value
+            // Get the input value from localStorage
             var username = localStorage.getItem("userName");
             var hash = localStorage.getItem("id");
             var id = localStorage.getItem("hash");
 
             // Create an object to send
             var data = { name: username, id: id, hash: hash };
-
 
             // Send data using the Fetch API (AJAX)
             fetch('https://valantainfinder.netlify.app/.netlify/functions/submit', {
@@ -354,15 +353,25 @@
                 },
                 body: JSON.stringify(data),  // Convert object to JSON string
             })
-                .then(response => response.json())  // Parse the response as JSON
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Server error, please try again later.');
+                    }
+                    return response.json();  // Parse the response as JSON
+                })
                 .then(result => {
-                    // Display the response from the server
-                    //document.getElementById('result').innerText = result.message;
+                    // Handle the server response
+                    console.log(result); // Log the result to console for debugging (you can remove this later)
+                    // Example: Display the message from the result (e.g., "Happy :)" or an error message)
+                    document.getElementById('result').innerText = result.message || 'Request successful!';
                 })
                 .catch(error => {
-                    // document.getElementById('result').innerText = "Error: " + error.message;
+                    // Handle any errors from the fetch request
+                    console.error('Error:', error.message);  // Log the error to console for debugging
+                    document.getElementById('result').innerText = "Error: " + error.message;  // Display the error message
                 });
         }
+
 
         //share buttonclick
         function sendUser() {
