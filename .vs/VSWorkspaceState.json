@@ -2,8 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\netlify",
+    "\\netlify\\functions",
     "\\public"
   ],
-  "SelectedNode": "\\netlify.toml",
+  "SelectedNode": "\\server.js",
   "PreviewInSolutionExplorer": false
 }
