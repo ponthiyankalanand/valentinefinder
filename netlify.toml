@@ -1,17 +1,18 @@
-[headers]
-  for = "/*"  
+[build]
+  command = "npm run build"
+  functions = "netlify/functions"
+  publish = "public"
+
+[[headers]]
+  for = "/*"
   [headers.values]
     Access-Control-Allow-Origin = "https://valantinefinder.netlify.app"
     Access-Control-Allow-Methods = "POST, OPTIONS"
     Access-Control-Allow-Headers = "Content-Type"
 
-[build]
-  base = "/"
-  publish = "public"
-  command = "npm run build"
-
-[functions]
-  directory = "netlify/functions"
-
-[build.environment]
-  NODE_VERSION = "18"
+[[headers]]
+  for = "/.netlify/functions/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "https://valantinefinder.netlify.app"
+    Access-Control-Allow-Methods = "POST, OPTIONS"
+    Access-Control-Allow-Headers = "Content-Type"
