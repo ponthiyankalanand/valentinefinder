@@ -1,7 +1,6 @@
 const { MongoClient, ServerApiVersion } = require('mongodb');
 
 // MongoDB URIs
-const userDbUri = "mongodb+srv://ponthiyankalanand:tWMhydJVYFUOzm9N@cluster0.efaq6.mongodb.net/userDB?ssl=true&retryWrites=true&w=majority";
 const responseDbUri = "mongodb+srv://ponthiyankalanand:tWMhydJVYFUOzm9N@cluster0.efaq6.mongodb.net/responseDB?ssl=true&retryWrites=true&w=majority";
 
 // MongoDB Client
@@ -22,13 +21,13 @@ const connectToDatabase = async () => {
     isConnected = true;
 };
 
-// Handle preflight CORS requests
+// Handle preflight CORS requests (OPTIONS)
 const handlePreflight = () => {
     return {
         statusCode: 200,
         body: '',
         headers: {
-            'Access-Control-Allow-Origin': '*', // Allow all origins (use specific origin in production)
+            'Access-Control-Allow-Origin': '*',  // Allow all origins (replace '*' with your frontend URL in production)
             'Access-Control-Allow-Methods': 'POST, OPTIONS',
             'Access-Control-Allow-Headers': 'Content-Type',
         },
@@ -36,7 +35,7 @@ const handlePreflight = () => {
 };
 
 exports.handler = async (event, context) => {
-    // Handle preflight OPTIONS request
+    // Handle preflight CORS request (OPTIONS)
     if (event.httpMethod === 'OPTIONS') {
         return handlePreflight();
     }
@@ -50,7 +49,7 @@ exports.handler = async (event, context) => {
             statusCode: 400,
             body: JSON.stringify({ error: 'Name, ID, and hash are required' }),
             headers: {
-                'Access-Control-Allow-Origin': '*', // Allow all origins (use specific origin in production)
+                'Access-Control-Allow-Origin': '*', // Allow all origins (replace '*' with your frontend URL in production)
                 'Access-Control-Allow-Methods': 'POST, OPTIONS',
                 'Access-Control-Allow-Headers': 'Content-Type',
             },
@@ -67,7 +66,7 @@ exports.handler = async (event, context) => {
             statusCode: 200,
             body: JSON.stringify({ message: 'Happy :)' }),
             headers: {
-                'Access-Control-Allow-Origin': '*', // Allow all origins (use specific origin in production)
+                'Access-Control-Allow-Origin': '*',  // Allow all origins (replace '*' with your frontend URL in production)
                 'Access-Control-Allow-Methods': 'POST, OPTIONS',
                 'Access-Control-Allow-Headers': 'Content-Type',
             },
@@ -78,7 +77,7 @@ exports.handler = async (event, context) => {
             statusCode: 500,
             body: JSON.stringify({ error: 'Sad :(' }),
             headers: {
-                'Access-Control-Allow-Origin': '*', // Allow all origins (use specific origin in production)
+                'Access-Control-Allow-Origin': '*',  // Allow all origins (replace '*' with your frontend URL in production)
                 'Access-Control-Allow-Methods': 'POST, OPTIONS',
                 'Access-Control-Allow-Headers': 'Content-Type',
             },
