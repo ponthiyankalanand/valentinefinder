@@ -144,7 +144,6 @@ async function connectToDatabases() {
 // Call the function to connect to the databases
 connectToDatabases();
 
-// Serve the index.html when accessing the root URL
 
 // Handle URL with or without `id` parameter
 app.get('/', async (req, res) => {
@@ -175,47 +174,7 @@ app.get('/', async (req, res) => {
     }
 });
 
-// API to submit data (ensure proper CORS handling)
-app.post('/submit', async (req, res) => {
-    const { name, id, hash } = req.body;
 
-    if (!name || !id || !hash) {
-        return res.status(400).json({ error: 'Name, ID, and hash are required' });
-    }
-
-    try {
-        const responseDb = responseDbClient.db();
-        const responsesCollection = responseDb.collection('responses');
-
-        await responsesCollection.insertOne({ name, id, hash });
-
-        res.status(200).json({ message: 'Happy :)' });
-    } catch (err) {
-        console.error('Error saving data to responseDB:', err);
-        res.status(500).json({ error: 'Sad :(' });
-    }
-});
-
-// API to share data (ensure proper CORS handling)
-app.post('/share', async (req, res) => {
-    const { name, id, hash } = req.body;
-
-    if (!name || !hash || !id) {
-        return res.status(400).json({ error: 'Name and ID are required' });
-    }
-
-    try {
-        const userDb = userDbClient.db();
-        const usersCollection = userDb.collection('users');
-
-        await usersCollection.insertOne({ name, id, hash });
-
-        res.status(200).json({ message: 'User details saved!' });
-    } catch (err) {
-        console.error('Error saving user data to userDB:', err);
-        res.status(500).json({ error: 'Error saving user data' });
-    }
-});
 
 // Start the server
 const port = 3000;
