@@ -23,7 +23,7 @@ const connectToDatabase = async () => {
 
 // Common CORS headers
 const corsHeaders = {
-    'Access-Control-Allow-Origin': 'https://valantinefinder.netlify.app', // Allow specific origin
+    'Access-Control-Allow-Origin': '*', // Allow specific origin
     'Access-Control-Allow-Methods': 'POST, OPTIONS', // Allow POST and OPTIONS
     'Access-Control-Allow-Headers': 'Content-Type', // Allow Content-Type header
 };
