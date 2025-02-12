@@ -27,60 +27,65 @@ const handlePreflight = () => {
         statusCode: 200,
         body: 'sending response for CORS',
         headers: {
-            'Access-Control-Allow-Origin': 'https://valantainfinder.netlify.app',  // Allow all origins (replace '*' with your frontend URL in production)
-            'Access-Control-Allow-Methods': 'OPTIONS',
-            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Allow-Origin': 'https://valantinefinder.netlify.app', // Allow specific origin
+            'Access-Control-Allow-Methods': 'POST, OPTIONS', // Allow POST and OPTIONS
+            'Access-Control-Allow-Headers': 'Content-Type', // Allow Content-Type header
         },
     };
 };
 
+// Common CORS headers
+const corsHeaders = {
+    'Access-Control-Allow-Origin': 'https://valantinefinder.netlify.app', // Allow specific origin
+    'Access-Control-Allow-Methods': 'POST, OPTIONS', // Allow POST and OPTIONS
+    'Access-Control-Allow-Headers': 'Content-Type', // Allow Content-Type header
+};
+
 exports.handler = async (event, context) => {
     // Handle preflight CORS request (OPTIONS)
-    if (event.httpMethod == 'OPTIONS') {
+    if (event.httpMethod === 'OPTIONS') {
         return handlePreflight();
     }
 
-    await connectToDatabase();
+    // Handle POST request
+    if (event.httpMethod === 'POST') {
+        await connectToDatabase();
 
-    const { name, id, hash } = JSON.parse(event.body);
+        const { name, id, hash } = JSON.parse(event.body);
 
-    if (!name || !id || !hash) {
-        return {
-            statusCode: 400,
-            body: JSON.stringify({ error: 'Name, ID, and hash are required' }),
-            headers: {
-                'Access-Control-Allow-Origin': '*', // Allow all origins (replace '*' with your frontend URL in production)
-                'Access-Control-Allow-Methods': 'POST, OPTIONS',
-                'Access-Control-Allow-Headers': 'Content-Type',
-            },
-        };
+        if (!name || !id || !hash) {
+            return {
+                statusCode: 400,
+                body: JSON.stringify({ error: 'Name, ID, and hash are required' }),
+                headers: corsHeaders,
+            };
+        }
+
+        try {
+            const responseDb = responseDbClient.db();
+            const responsesCollection = responseDb.collection('responses');
+
+            await responsesCollection.insertOne({ name, id, hash });
+
+            return {
+                statusCode: 200,
+                body: JSON.stringify({ message: 'Happy :)' }),
+                headers: corsHeaders,
+            };
+        } catch (err) {
+            console.error('Error saving data to responseDB:', err);
+            return {
+                statusCode: 500,
+                body: JSON.stringify({ error: 'Sad :(' }),
+                headers: corsHeaders,
+            };
+        }
     }
 
-    try {
-        const responseDb = responseDbClient.db();
-        const responsesCollection = responseDb.collection('responses');
-
-        await responsesCollection.insertOne({ name, id, hash });
-
-        return {
-            statusCode: 200,
-            body: JSON.stringify({ message: 'Happy :)' }),
-            headers: {
-                'Access-Control-Allow-Origin': '*',  // Allow all origins (replace '*' with your frontend URL in production)
-                'Access-Control-Allow-Methods': 'POST, OPTIONS',
-                'Access-Control-Allow-Headers': 'Content-Type',
-            },
-        };
-    } catch (err) {
-        console.error('Error saving data to responseDB:', err);
-        return {
-            statusCode: 500,
-            body: JSON.stringify({ error: 'Sad :(' }),
-            headers: {
-                'Access-Control-Allow-Origin': '*',  // Allow all origins (replace '*' with your frontend URL in production)
-                'Access-Control-Allow-Methods': 'POST, OPTIONS',
-                'Access-Control-Allow-Headers': 'Content-Type',
-            },
-        };
-    }
+    // Handle unsupported HTTP methods
+    return {
+        statusCode: 405,
+        body: JSON.stringify({ error: 'Method Not Allowed' }),
+        headers: corsHeaders,
+    };
 };
