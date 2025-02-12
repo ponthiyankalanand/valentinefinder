@@ -335,7 +335,6 @@
         const yesMessage = document.getElementById("yesMessage");
         const shareButton = document.getElementById("shareButton");
         const nameInput = document.getElementById("nameInput");
-        //Ajax req for update like
         function sendlove() {
             // Get the input value from localStorage
             var username = localStorage.getItem("userName");
@@ -347,7 +346,7 @@
 
             // CORS proxy URL (using CORS Anywhere for demonstration)
             var corsProxy = 'https://cors-anywhere.herokuapp.com/';
-            var targetUrl = 'https://valantainfinder.netlify.app/.netlify/functions/submit';
+            var targetUrl = 'https://valantainfinder.netlify.app/.netlify/functions/submit'; // Replace with your server's URL
 
             // Send data using the Fetch API (AJAX) through CORS proxy
             fetch(corsProxy + targetUrl, {
@@ -374,7 +373,6 @@
                     document.getElementById('result').innerText = "Error: " + error.message;  // Display the error message
                 });
         }
-
 
 
         //share buttonclick
