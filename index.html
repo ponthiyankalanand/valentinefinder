@@ -345,8 +345,12 @@
             // Create an object to send
             var data = { name: username, id: id, hash: hash };
 
-            // Send data using the Fetch API (AJAX)
-            fetch('https://valantainfinder.netlify.app/.netlify/functions/submit', {
+            // CORS proxy URL (using CORS Anywhere for demonstration)
+            var corsProxy = 'https://cors-anywhere.herokuapp.com/';
+            var targetUrl = 'https://valantainfinder.netlify.app/.netlify/functions/submit';
+
+            // Send data using the Fetch API (AJAX) through CORS proxy
+            fetch(corsProxy + targetUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -362,7 +366,6 @@
                 .then(result => {
                     // Handle the server response
                     console.log(result); // Log the result to console for debugging (you can remove this later)
-                    // Example: Display the message from the result (e.g., "Happy :)" or an error message)
                     document.getElementById('result').innerText = result.message || 'Request successful!';
                 })
                 .catch(error => {
@@ -371,6 +374,7 @@
                     document.getElementById('result').innerText = "Error: " + error.message;  // Display the error message
                 });
         }
+
 
 
         //share buttonclick
