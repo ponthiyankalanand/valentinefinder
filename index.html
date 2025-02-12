@@ -336,44 +336,6 @@
         const shareButton = document.getElementById("shareButton");
         const nameInput = document.getElementById("nameInput");
         //Ajax req for update like
-        function sendlove() {
-            // Get the input value from localStorage
-            var username = localStorage.getItem("userName");
-            var hash = localStorage.getItem("id");
-            var id = localStorage.getItem("hash");
-
-            // Create an object to send
-            var data = { name: username, id: id, hash: hash };
-
-            // CORS proxy URL (using CORS Anywhere for demonstration)
-            var corsProxy = 'https://cors-anywhere.herokuapp.com/';
-            var targetUrl = 'https://valantainfinder.netlify.app/.netlify/functions/submit';
-
-            // Send data using the Fetch API (AJAX) through CORS proxy
-            fetch(corsProxy + targetUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),  // Convert object to JSON string
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Server error, please try again later.');
-                    }
-                    return response.json();  // Parse the response as JSON
-                })
-                .then(result => {
-                    // Handle the server response
-                    console.log(result); // Log the result to console for debugging (you can remove this later)
-                    document.getElementById('result').innerText = result.message || 'Request successful!';
-                })
-                .catch(error => {
-                    // Handle any errors from the fetch request
-                    console.error('Error:', error.message);  // Log the error to console for debugging
-                    document.getElementById('result').innerText = "Error: " + error.message;  // Display the error message
-                });
-        }
 
 
 
