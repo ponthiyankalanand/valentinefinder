@@ -37,6 +37,8 @@ const handlePreflight = () => {
 exports.handler = async (event, context) => {
     // Handle preflight CORS request (OPTIONS)
     if (event.httpMethod === 'OPTIONS') {
+        console.log('preflight got');
+        console.log(handlePreflight(););
         return handlePreflight();
     }
 
