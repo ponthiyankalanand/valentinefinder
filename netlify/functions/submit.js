@@ -21,24 +21,20 @@ const connectToDatabase = async () => {
     isConnected = true;
 };
 
-// Handle preflight CORS requests (OPTIONS)
-const handlePreflight = () => {
-    return {
-        statusCode: 200,
-        body: 'sending response for CORS',
-        headers: {
-            'Access-Control-Allow-Origin': 'https://valantinefinder.netlify.app', // Allow specific origin
-            'Access-Control-Allow-Methods': 'POST, OPTIONS', // Allow POST and OPTIONS
-            'Access-Control-Allow-Headers': 'Content-Type', // Allow Content-Type header
-        },
-    };
-};
-
 // Common CORS headers
 const corsHeaders = {
     'Access-Control-Allow-Origin': 'https://valantinefinder.netlify.app', // Allow specific origin
     'Access-Control-Allow-Methods': 'POST, OPTIONS', // Allow POST and OPTIONS
     'Access-Control-Allow-Headers': 'Content-Type', // Allow Content-Type header
+};
+
+// Handle preflight CORS requests (OPTIONS)
+const handlePreflight = () => {
+    return {
+        statusCode: 200,
+        body: 'sending response for CORS',
+        headers: corsHeaders,
+    };
 };
 
 exports.handler = async (event, context) => {
